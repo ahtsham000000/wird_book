@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Details for {{ phone.number }}</h2>
+
+<h3>Basic Information</h3>
+<ul>
+    <li>Number: {{ phone.number }}</li>
+    <li>Is Verified: {{ phone.is_verified }}</li>
+    <li>Role: {{ phone.get_role_display }}</li>
+    <li>Created At: {{ phone.created_at }}</li>
+    <li>JWT Token: {{ token.jwt_token }}</li>
+</ul>
+
+<h3>Community Memberships</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Community</th>
+            <th>Role</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in community_members %}
+            <tr>
+                <td>{{ member.get_community_display }}</td>
+                <td>{{ member.get_role_display }}</td>
+                <td>{{ member.get_status_display }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3">No community memberships.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Noticeboard Posts</h3>
+<ul>
+    {% for post in noticeboard_posts %}
+        <li>{{ post.title }} - {{ post.created_at }}</li>
+    {% empty %}
+        <li>No posts.</li>
+    {% endfor %}
+</ul>
+
+<h3>Questions</h3>
+<ul>
+    {% for question in questions %}
+        <li>{{ question.question_title }} - {{ question.created_at }}</li>
+    {% empty %}
+        <li>No questions.</li>
+    {% endfor %}
+</ul>
+
+<h3>Answers</h3>
+<ul>
+    {% for answer in answers %}
+        <li>Answer to Question ID {{ answer.question.id }} - {{ answer.created_at }}</li>
+    {% empty %}
+        <li>No answers.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'custom_admin:dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+{% endblock %}

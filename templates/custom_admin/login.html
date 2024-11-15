@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+
+<!-- templates/custom_admin/login.html -->
+
+{% block content %}
+<style>
+    /* Hide Navbar and other elements from base.html */
+    nav.navbar {
+        display: none;
+    }
+    
+    /* Ensure html and body take full height */
+    html, body {
+        height: 100%;
+        margin: 0;
+        position: relative; /* Establish a containing block for absolute positioning */
+        background-color: #121212; /* Dark background */
+        color: #ffffff; /* White text for contrast */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* Login form container */
+    .login-container {
+        position: absolute; /* Remove from normal flow */
+        top: 50%; /* Position from top */
+        left: 50%; /* Position from left */
+        transform: translate(-50%, -50%); /* Shift to center */
+        background-color: #1e1e1e; /* Slightly lighter dark background */
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        max-width: 400px;
+        width: 90%; /* Responsive width */
+        box-sizing: border-box;
+    }
+    
+    /* Form heading */
+    .login-container h2 {
+        margin-bottom: 30px;
+        text-align: center;
+        color: #ffffff;
+        font-weight: 700;
+    }
+    
+    /* Input fields */
+    .login-container .form-control {
+        background-color: #2c2c2c; /* Dark input background */
+        border: 1px solid #444444; /* Subtle borders */
+        color: #ffffff; /* White text */
+        border-radius: 6px;
+        padding: 12px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    /* Placeholder text */
+    .login-container .form-control::placeholder {
+        color: #aaaaaa;
+    }
+    
+    /* Input focus state */
+    .login-container .form-control:focus {
+        background-color: #3a3a3a;
+        border-color: #bb86fc; /* Accent color on focus */
+        box-shadow: 0 0 5px rgba(187, 134, 252, 0.5);
+        outline: none;
+    }
+    
+    /* Labels */
+    .login-container label {
+        color: #ffffff;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+    }
+    
+    /* Submit button */
+    .login-container .btn-primary {
+        background-color: #bb86fc; /* Vibrant accent color */
+        border-color: #bb86fc;
+        color: #000000; /* Black text for contrast */
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        width: 100%;
+    }
+    
+    /* Submit button hover effect */
+    .login-container .btn-primary:hover {
+        background-color: #985eff;
+        border-color: #985eff;
+        color: #ffffff; /* White text on hover */
+    }
+    
+    /* Error messages */
+    .login-container .invalid-feedback {
+        display: block;
+        color: #ff6b6b; /* Soft red for errors */
+        margin-top: 5px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 576px) {
+        .login-container {
+            padding: 30px 20px;
+        }
+    
+        .login-container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+    
+        .login-container .btn-primary {
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <h2>Admin Login</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <!-- Username Field -->
+        <div class="mb-4">
+            <label for="id_username">Username</label>
+            {{ form.username|add_class:"form-control" }}
+            {% if form.username.errors %}
+                <div class="invalid-feedback">
+                    {{ form.username.errors.as_text }}
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Password Field -->
+        <div class="mb-4">
+            <label for="id_password">Password</label>
+            {{ form.password|add_class:"form-control" }}
+            {% if form.password.errors %}
+                <div class="invalid-feedback">
+                    {{ form.password.errors.as_text }}
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock %}

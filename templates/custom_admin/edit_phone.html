@@ -1,0 +1,29 @@
+<!-- templates/custom_admin/edit_phone.html -->
+
+{% extends 'base.html' %}
+{% load form_tags %}
+
+{% block content %}
+<h2>Edit Phone Number</h2>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+        <label for="id_number" class="form-label">Number</label>
+        {{ form.number|add_class:"form-control" }}
+        {{ form.number.errors }}
+    </div>
+    <div class="mb-3">
+        <label for="id_is_verified" class="form-label">Is Verified</label>
+        {{ form.is_verified|add_class:"form-check-input" }}
+        {{ form.is_verified.errors }}
+    </div>
+    <div class="mb-3">
+        <label for="id_role" class="form-label">Role</label>
+        {{ form.role|add_class:"form-select" }}
+        {{ form.role.errors }}
+    </div>
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="{% url 'custom_admin:dashboard' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
